@@ -3,8 +3,8 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Shelf {
-    public int SHELF_NUMBER_;
-    public int SUBJECT_;
+    public final static int SHELF_NUMBER_ = 0;
+    public final static int SUBJECT_ = 1;
 
     private HashMap<Book, Integer> books = new HashMap<>();
     private int shelfNumber;
@@ -66,22 +66,6 @@ public class Shelf {
             bookInfo += "\n" + b.toString() + " " + count;
         }
         return totalBookCount + " books on shelf : " + shelfNumber+ " : " + subject + bookInfo;
-    }
-
-    public int getSHELF_NUMBER_() {
-        return SHELF_NUMBER_;
-    }
-
-    public void setSHELF_NUMBER_(int SHELF_NUMBER_) {
-        this.SHELF_NUMBER_ = SHELF_NUMBER_;
-    }
-
-    public int getSUBJECT_() {
-        return SUBJECT_;
-    }
-
-    public void setSUBJECT_(int SUBJECT_) {
-        this.SUBJECT_ = SUBJECT_;
     }
 
     public HashMap<Book, Integer> getBooks() {
