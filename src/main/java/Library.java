@@ -203,15 +203,30 @@ public class Library {
         try {
             f1 = new FileReader(fileName);
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            return Code.FILE_NOT_FOUND_ERROR;
         }
         Scanner s1 = new Scanner(f1);
-        int numBooks = s1.nextInt();
-        initBooks(numBooks, s1);
-        int numShelves = s1.nextInt();
-        initShelves(numShelves, s1);
-        int numReader = s1.nextInt();
-        initReader(numReader, s1);
+        int numBooks = convertInt(s1.nextLine(), Code.BOOK_COUNT_ERROR);
+        if (numBooks <0)
+            return Code.BOOK_COUNT_ERROR;
+        Code code = initBooks(numBooks, s1);
+        if (!code.equals(Code.SUCCESS))
+            return code;
+        listBooks();
+        int numShelves = convertInt(s1.nextLine(), Code.SHELF_COUNT_ERROR);
+        if (numShelves <0)
+            return Code.SHELF_COUNT_ERROR;
+        code = initShelves(numShelves, s1);
+        if (!code.equals(Code.SUCCESS))
+            return code;
+        listShelves();
+        int numReaders = convertInt(s1.nextLine(), Code.READER_COUNT_ERROR);
+        if (numReaders <0)
+            return Code.READER_COUNT_ERROR;
+        code = initReader(numReaders, s1);
+        if (!code.equals(Code.SUCCESS))
+            return code;
+        listReaders();
         return Code.SUCCESS;
     }
 
@@ -241,6 +256,8 @@ public class Library {
         for (int i =0; i<numShelves; i++) {
             String[] arr = s1.nextLine().split(",");
             Shelf s = new Shelf(convertInt(arr[Shelf.SHELF_NUMBER_], Code.SHELF_NUMBER_PARSE_ERROR), arr[Shelf.SUBJECT_]);
+            if (s.getShelfNumber() < 0)
+                return Code.SHELF_NUMBER_PARSE_ERROR;
             addShelf(s);
         }
         if (shelves.size() == numShelves) {
